@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>ControllerZonas</servlet-name>
+        <servlet-class>com.fpmislata.servlets.ControllerZonas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControllerAmarres</servlet-name>
+        <servlet-class>com.fpmislata.servlets.ControllerAmarres</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ControllerZonas</servlet-name>
+        <url-pattern>/ListarZonas</url-pattern>
+        <url-pattern>/AltaZona</url-pattern>
+        <url-pattern>/ModificarZona</url-pattern>
+        <url-pattern>/EliminarZona</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControllerAmarres</servlet-name>
+        <url-pattern>/ListarAmarres</url-pattern>
+        <url-pattern>/AltaAmarre</url-pattern>
+        <url-pattern>/ModificarAmarre</url-pattern>
+        <url-pattern>/EliminarAmarre</url-pattern>
+        <url-pattern>/ListarAmarresPorZona</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
