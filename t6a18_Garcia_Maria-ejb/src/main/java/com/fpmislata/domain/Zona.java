@@ -6,6 +6,7 @@
 package com.fpmislata.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,9 +25,9 @@ import javax.persistence.Table;
  * @author Maria
  */
 @Entity
+@Table(name = "zonas")
 @NamedQueries({
     @NamedQuery(name = "Zona.findAll", query = "SELECT z FROM Zona z ORDER BY z.id")})
-@Table(name = "zonas")
 public class Zona implements Serializable{
     
     private static final long serialVersionUID = 1L;
@@ -39,7 +40,7 @@ public class Zona implements Serializable{
     @Column(nullable = false, length = 1)
     private String letra;
     
-    @Column(nullable = false, length = 3)
+    @Column(nullable = false)
     private int profundidad;
     
     @Column(nullable = false, length = 45)
@@ -49,12 +50,14 @@ public class Zona implements Serializable{
     private Set<Amarre> amarres;
 
     public Zona() {
+        amarres = new HashSet<>();
     }
 
     public Zona(String letra, int profundidad, String dimensiones) {
         this.letra = letra;
         this.profundidad = profundidad;
         this.dimensiones = dimensiones;
+        amarres = new HashSet<>();
     }
 
     public int getId() {

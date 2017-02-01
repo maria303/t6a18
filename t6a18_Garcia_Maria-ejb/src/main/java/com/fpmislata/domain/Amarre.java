@@ -22,9 +22,9 @@ import javax.persistence.Table;
  * @author Maria
  */
 @Entity
+@Table(name = "amarres")
 @NamedQueries({
     @NamedQuery(name = "Amarre.findAll", query = "SELECT a FROM Amarre a ORDER BY a.id")})
-@Table(name = "amarres")
 public class Amarre implements Serializable{
     
     private static final long serialVersionUID = 1L;
@@ -34,7 +34,7 @@ public class Amarre implements Serializable{
     @Column(name = "id_amarre")
     private int id;
     
-    @Column(nullable = false, length = 4)
+    @Column(nullable = false)
     private int numero;
     
     @Column(nullable = false, length = 45)
@@ -44,7 +44,7 @@ public class Amarre implements Serializable{
     private String dimensiones;
     
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "zona")
     private Zona zona;
 
     public Amarre() {
