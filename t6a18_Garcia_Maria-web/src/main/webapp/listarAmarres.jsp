@@ -16,7 +16,7 @@
     <body>
         <h1>Listado de amarres</h1>
         
-        <a href="agregarAmarre.jsp">Agragar amarre</a>
+        <a href="agregarAmarre.jsp">Agregar amarre</a>
         <br>
         <br>
         
@@ -43,8 +43,8 @@
                 <td><%=tipo%></td>
                 <td><%=dimensiones%></td>
                 <td><%=zona%></td>
-                <td></td>
-                <td></td>
+                <td><a href="ModificarAmarre?accion=editar&id=<%=id%>">Modificar amarre</a></td>
+                <td><a href="EliminarAmarre?id=<%=id%>">Eliminar amarre</a></td>
             </tr>
             <% } %>
         </table>

@@ -25,6 +25,7 @@
                 <th>Letra</th>
                 <th>Profundidad</th>
                 <th>Dimensiones</th>
+                <th>Empleado</th>
                 <th></th>
                 <th></th>
                 <th>Visualizar amarres</th>
@@ -36,13 +37,15 @@
                     String letra = zona.getLetra();
                     int profundidad = zona.getProfundidad();
                     String dimensiones = zona.getDimensiones();
+                    String empleado = zona.getEmpleado().getNombre();
             %>
             <tr>
                 <td><%=letra%></td>
                 <td><%=profundidad%></td>
                 <td><%=dimensiones%></td>
-                <td></td>
-                <td></td>
+                <td><%=empleado%></td>
+                <td><a href="ModificarZona?accion=editar&id=<%=id%>">Modificar zona</a></td>
+                <td><a href="EliminarZona?id=<%=id%>">Eliminar zona</a></td>
                 <td><a href="ListarAmarresPorZona?id=<%=id%>">Visualizar amarres</a></td>
             </tr>
             <% } %>

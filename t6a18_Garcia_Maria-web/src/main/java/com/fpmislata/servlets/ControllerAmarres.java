@@ -147,11 +147,61 @@ public class ControllerAmarres extends HttpServlet {
     }
 
     private void modificarAmarre(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String accion = request.getParameter("accion");
         
+        if (accion != null && accion.equals("editar")) {
+            String idAmarre = request.getParameter("id");
+            
+            if (idAmarre != null) {
+                int id = Integer.valueOf(idAmarre);
+                Amarre amarre = new Amarre();
+                amarre.setId(id);
+                
+                try {
+                    amarre = amarreService.findAmarreById(amarre);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
+                request.setAttribute("amarre", amarre);
+                request.getRequestDispatcher("/modificarAmarre.jsp").forward(request, response);
+            }
+        } else if (accion != null && accion.equals("modificar")) {
+            
+            String id = request.getParameter("id");
+            String numero = request.getParameter("numero");
+            String tipo = request.getParameter("tipo");
+            String dimensiones = request.getParameter("dimensiones");
+            
+            Amarre amarre = new Amarre();
+            amarre.setId(Integer.valueOf(id));
+            amarre.setNumero(Integer.valueOf(numero));
+            amarre.setTipo(tipo);
+            amarre.setDimensiones(dimensiones);
+            
+            try {
+                amarreService.updateAmarre(amarre);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            listarAmarres(request, response);
+        }
     }
 
     private void eliminarAmarre(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+        String id = request.getParameter("id");
+
+        Amarre amarre = new Amarre();
+        amarre.setId(Integer.valueOf(id));
+
+        try {
+            amarreService.deleteAmarre(amarre);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        listarAmarres(request, response);
     }
 
     private void listarAmarresPorZona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

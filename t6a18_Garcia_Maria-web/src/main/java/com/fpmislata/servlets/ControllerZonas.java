@@ -5,7 +5,9 @@
  */
 package com.fpmislata.servlets;
 
+import com.fpmislata.domain.Empleado;
 import com.fpmislata.domain.Zona;
+import com.fpmislata.service.EmpleadoServiceLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -23,8 +25,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author Maria
  */
 @WebServlet(name = "ControllerZonas", loadOnStartup = 1, 
-        urlPatterns = {"/ListarZonas", "/AltaZona", "/ModificarZona", "/EliminarZona"})
+        urlPatterns = {"/ListarZonas", "/AltaZona", "/ModificarZona", "/EliminarZona", "/ListarZonasPorEmpleado"})
 public class ControllerZonas extends HttpServlet {
+
+    @EJB
+    private EmpleadoServiceLocal empleadoService;
 
     @EJB
     private com.fpmislata.service.ZonaServiceLocal zonaService;
@@ -52,6 +57,8 @@ public class ControllerZonas extends HttpServlet {
             modificarZona(request, response);
         }else if(userPath.equals("/EliminarZona")){
             eliminarZona(request, response);
+        }else if(userPath.equals("/ListarZonasPorEmpleado")){
+            listarZonasPorEmpleado(request, response);
         }
     }
 
@@ -101,6 +108,10 @@ public class ControllerZonas extends HttpServlet {
             ArrayList<Zona> listaArrayZonas = new ArrayList<>(listaZonas);
             request.getSession().setAttribute("zonas", listaArrayZonas);
             
+            List listaEmpleados = empleadoService.listEmpleados();
+            ArrayList<Empleado> listaArrayEmpleados = new ArrayList<>(listaEmpleados);
+            request.getSession().setAttribute("empleados", listaArrayEmpleados);
+            
             RequestDispatcher rd = request.getRequestDispatcher("/listarZonas.jsp");
             rd.forward(request, response);
         }catch(Exception e){
@@ -112,11 +123,20 @@ public class ControllerZonas extends HttpServlet {
         String letra = request.getParameter("letra");
         int profundidad = Integer.parseInt(request.getParameter("profundidad"));
         String dimensiones = request.getParameter("dimensiones");
+        int id_empleado = Integer.parseInt(request.getParameter("empleado"));
         
         Zona zona = new Zona(letra, profundidad, dimensiones);
         
+        Empleado empleado = new Empleado();
+        empleado.setId(id_empleado);
+        empleado = empleadoService.findEmpleadoById(empleado);
+        
+        zona.setEmpleado(empleado);
+        empleado.getZonas().add(zona);
+        
         try{
             zonaService.addZona(zona);
+            empleadoService.updateEmpleado(empleado);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -129,7 +149,36 @@ public class ControllerZonas extends HttpServlet {
     }
 
     private void eliminarZona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+        String id = request.getParameter("id");
+
+        Zona zona = new Zona();
+        zona.setId(Integer.valueOf(id));
+
+        try {
+            zonaService.deleteZona(zona);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        listarZonas(request, response);
+    }
+
+    private void listarZonasPorEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            String id = request.getParameter("id");
+            
+            Empleado empleado = new Empleado();
+            empleado.setId(Integer.valueOf(id));
+            empleado = empleadoService.findEmpleadoById(empleado);
+            
+            ArrayList<Zona> listaArrayZona = new ArrayList<>(empleado.getZonas());
+            request.getSession().setAttribute("zonas", listaArrayZona);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("/listarZonas.jsp");
+            rd.forward(request, response);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 }

@@ -15,5 +15,7 @@
         <a href="ListarZonas">Listado de Zonas</a>
         <br>
         <a href="ListarAmarres">Listado de Amarres</a>
+        <br>
+        <a href="ListarEmpleados">Listado de Empleados</a>
     </body>
 </html>

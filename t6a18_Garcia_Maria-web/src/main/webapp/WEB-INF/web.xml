@@ -8,12 +8,18 @@
         <servlet-name>ControllerAmarres</servlet-name>
         <servlet-class>com.fpmislata.servlets.ControllerAmarres</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControllerEmpleados</servlet-name>
+        <servlet-class>com.fpmislata.servlets.ControllerEmpleados</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControllerZonas</servlet-name>
         <url-pattern>/ListarZonas</url-pattern>
         <url-pattern>/AltaZona</url-pattern>
         <url-pattern>/ModificarZona</url-pattern>
         <url-pattern>/EliminarZona</url-pattern>
+        <url-pattern>/ListarZonasPorEmpleado</url-pattern>
+        <url-pattern>/ControllerZonas</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ControllerAmarres</servlet-name>
@@ -22,6 +28,15 @@
         <url-pattern>/ModificarAmarre</url-pattern>
         <url-pattern>/EliminarAmarre</url-pattern>
         <url-pattern>/ListarAmarresPorZona</url-pattern>
+        <url-pattern>/ControllerAmarres</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControllerEmpleados</servlet-name>
+        <url-pattern>/ListarEmpleados</url-pattern>
+        <url-pattern>/AltaEmpleado</url-pattern>
+        <url-pattern>/ModificarEmpleado</url-pattern>
+        <url-pattern>/EliminarEmpleado</url-pattern>
+        <url-pattern>/ControllerEmpleados</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
