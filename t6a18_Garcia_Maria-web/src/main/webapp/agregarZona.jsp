@@ -4,6 +4,8 @@
     Author     : alumno
 --%>
 
+<%@page import="com.fpmislata.domain.Empleado"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,7 +16,7 @@
     <body>
         <h1>Agregar Zona</h1>
         
-        <form action="AltaEmpleado" method="POST">
+        <form action="AltaZona" method="POST">
             <input type="hidden" name="accion" value="agregar"/>
             
             <label for="letra">Letra:</label>
@@ -24,8 +26,20 @@
             <input type="text" name="profundidad" style="display: block;"/>
             
             <label for="dimensiones">Dimensiones:</label>
-            <input type="text" name="dimensionse" style="display: block;"/>
+            <input type="text" name="dimensiones" style="display: block;"/>
             
+            <label for="empleado">Empleado:</label>
+            <select name="empleado" id="empleado" style="display: block;">
+                <%
+                    List<Empleado> lista = (List) session.getAttribute("empleados");
+                    for (Empleado empleado : lista) {
+                        int id = empleado.getId();
+                        String nombre = empleado.getNombre();
+                        String apellidos = empleado.getApellidos();
+                %>
+                <option value="<%=id%>"><%=nombre%> - <%=apellidos%></option>
+                <% }%>
+            </select>
             <input type="submit" value="enviar"/>
         </form>
         
