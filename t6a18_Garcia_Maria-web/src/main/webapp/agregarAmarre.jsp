@@ -14,18 +14,18 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Agragar Amarre</h1>
+        <h1>Agregar Amarre</h1>
 
         <form action="AltaAmarre" method="POST">
             <input type="hidden" name="accion" value="agregar"/>
 
-            <label for="nombre">Numero:</label>
+            <label for="numero">Número:</label>
             <input type="text" name="numero" style="display: block;"/>
 
-            <label for="nombre">Tipo:</label>
+            <label for="tipo">Tipo:</label>
             <input type="text" name="tipo" style="display: block;"/>
 
-            <label for="nombre">Dimensiones:</label>
+            <label for="dimensiones">Dimensiones:</label>
             <input type="text" name="dimensiones" style="display: block;"/>
 
             <label for="zona">Zona:</label>

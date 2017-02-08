@@ -16,6 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -51,9 +53,9 @@ public class Zona implements Serializable{
     @OneToMany(mappedBy = "zona", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private Set<Amarre> amarres;
     
-    @ManyToOne
-    @JoinColumn(name="empleado")
-    private Empleado empleado;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinTable(name = "zonas_empleados", joinColumns = @JoinColumn(name = "id_zona"), inverseJoinColumns = @JoinColumn(name = "id_empleado"))
+    private Set<Empleado> empleados;
 
     public Zona() {
         amarres = new HashSet<>();
@@ -106,11 +108,11 @@ public class Zona implements Serializable{
         this.amarres = amarres;
     }
 
-    public Empleado getEmpleado() {
-        return empleado;
+    public Set<Empleado> getEmpleados() {
+        return empleados;
     }
 
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
+    public void setEmpleados(Set<Empleado> empleados) {
+        this.empleados = empleados;
     }
 }

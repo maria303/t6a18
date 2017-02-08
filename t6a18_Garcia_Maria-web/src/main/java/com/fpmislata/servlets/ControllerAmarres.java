@@ -58,7 +58,7 @@ public class ControllerAmarres extends HttpServlet {
             modificarAmarre(request, response);
         }else if(userPath.equals("/EliminarAmarre")){
             eliminarAmarre(request, response);
-        }else if(userPath.equals("ListarAmarresPorZona")){
+        }else if(userPath.equals("/ListarAmarresPorZona")){
             listarAmarresPorZona(request, response);
         }
     }

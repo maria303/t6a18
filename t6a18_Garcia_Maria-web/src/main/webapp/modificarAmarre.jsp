@@ -25,7 +25,7 @@
             <label for="nombre">Tipo:</label>
             <input type="text" name="tipo" value="${amarre.tipo}" style="display: block;"/>
 
-            <label for="nombre">Dimensionse:</label>
+            <label for="nombre">Dimensiones:</label>
             <input type="text" name="dimensiones" value="${amarre.dimensiones}" style="display: block;"/>
             
             </form>

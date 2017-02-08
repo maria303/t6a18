@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -131,7 +132,7 @@ public class ControllerZonas extends HttpServlet {
         empleado.setId(id_empleado);
         empleado = empleadoService.findEmpleadoById(empleado);
         
-        zona.setEmpleado(empleado);
+        zona.setEmpleados((Set<Empleado>) empleado);
         empleado.getZonas().add(zona);
         
         try{

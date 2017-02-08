@@ -4,6 +4,8 @@
     Author     : Maria
 --%>
 
+<%@page import="java.util.Set"%>
+<%@page import="com.fpmislata.domain.Empleado"%>
 <%@page import="com.fpmislata.domain.Zona"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -25,10 +27,10 @@
                 <th>Letra</th>
                 <th>Profundidad</th>
                 <th>Dimensiones</th>
-                <th>Empleado</th>
                 <th></th>
                 <th></th>
                 <th>Visualizar amarres</th>
+                <th>Visualizar empleados</th>
             </tr>
             <% 
                 ArrayList<Zona> lista = (ArrayList) session.getAttribute("zonas");
@@ -37,16 +39,23 @@
                     String letra = zona.getLetra();
                     int profundidad = zona.getProfundidad();
                     String dimensiones = zona.getDimensiones();
-                    String empleado = zona.getEmpleado().getNombre();
             %>
             <tr>
                 <td><%=letra%></td>
                 <td><%=profundidad%></td>
                 <td><%=dimensiones%></td>
-                <td><%=empleado%></td>
+                <!--<td>-->
+                <% /*Set<Empleado> empleados = zona.getEmpleados();
+                    for(Empleado empleado : empleados){
+                        String empleado2 = empleado.getNombre();*/
+                %>
+                <%/*=empleado2 + " "*/%>
+                <%/* }*/ %>
+                <!--</td>-->
                 <td><a href="ModificarZona?accion=editar&id=<%=id%>">Modificar zona</a></td>
                 <td><a href="EliminarZona?id=<%=id%>">Eliminar zona</a></td>
                 <td><a href="ListarAmarresPorZona?id=<%=id%>">Visualizar amarres</a></td>
+                <td><a href="ListarEmpleadosPorZona?id=<%=id%>">Visualizar empleados</a></td>
             </tr>
             <% } %>
         </table>

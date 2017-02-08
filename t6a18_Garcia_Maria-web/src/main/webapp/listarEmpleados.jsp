@@ -15,7 +15,7 @@
     </head>
     <body>
         <h1>Listado de Empledaos</h1>
-        <h2>Versión con controlador</h2>
+        
         <a href="agregarEmpleado.jsp">Agregar Empleado</a>
         <br/>
         <br/>
@@ -47,7 +47,7 @@
                     String provincia = empleado.getDireccion().getProvincia();
             %>
             <tr>
-                <td><%=nombre%></a></td>
+                <td><%=nombre%></td>
                 <td><%=apellidos%></td>
                 <td><%=dni%></td>
                 <td><%=telefono%></td>

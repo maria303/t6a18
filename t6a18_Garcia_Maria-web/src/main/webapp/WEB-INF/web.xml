@@ -36,6 +36,7 @@
         <url-pattern>/AltaEmpleado</url-pattern>
         <url-pattern>/ModificarEmpleado</url-pattern>
         <url-pattern>/EliminarEmpleado</url-pattern>
+        <url-pattern>/ListarEmpleadosPorZona</url-pattern>
         <url-pattern>/ControllerEmpleados</url-pattern>
     </servlet-mapping>
     <session-config>

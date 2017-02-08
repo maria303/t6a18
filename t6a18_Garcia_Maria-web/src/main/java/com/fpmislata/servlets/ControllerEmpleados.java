@@ -7,7 +7,9 @@ package com.fpmislata.servlets;
 
 import com.fpmislata.domain.Direccion;
 import com.fpmislata.domain.Empleado;
+import com.fpmislata.domain.Zona;
 import com.fpmislata.service.EmpleadoServiceLocal;
+import com.fpmislata.service.ZonaServiceLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -24,9 +26,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Maria
  */
-@WebServlet(name = "ControllerEmpleados", loadOnStartup = 1, 
-        urlPatterns = {"/ListarEmpleados", "/AltaEmpleado", "/ModificarEmpleado", "/EliminarEmpleado"})
+@WebServlet(name = "ControllerEmpleados", loadOnStartup = 1,
+        urlPatterns = {"/ListarEmpleados", "/AltaEmpleado", "/ModificarEmpleado", "/EliminarEmpleado", "/ListarEmpleadosPorZona"})
 public class ControllerEmpleados extends HttpServlet {
+
+    @EJB
+    private ZonaServiceLocal zonaService;
 
     @EJB
     private EmpleadoServiceLocal empleadoService;
@@ -43,17 +48,19 @@ public class ControllerEmpleados extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String userPath = request.getServletPath();
-        
-        if(userPath.equals("/ListarEmpleados")){
+
+        if (userPath.equals("/ListarEmpleados")) {
             listarEmpleados(request, response);
-        }else if(userPath.equals("/AltaEmpleado")){
+        } else if (userPath.equals("/AltaEmpleado")) {
             altaEmpleado(request, response);
-        }else if(userPath.equals("/ModificarEmpleado")){
+        } else if (userPath.equals("/ModificarEmpleado")) {
             ModificarEmpleado(request, response);
-        }else if(userPath.equals("/EliminarEmpleado")){
+        } else if (userPath.equals("/EliminarEmpleado")) {
             eliminarEmpleado(request, response);
+        } else if (userPath.equals("/ListarEmpleadosPorZona")) {
+            listarEmpleadosPorZona(request, response);
         }
     }
 
@@ -97,15 +104,15 @@ public class ControllerEmpleados extends HttpServlet {
     }// </editor-fold>
 
     private void listarEmpleados(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try{
+        try {
             List listaEmpleados = empleadoService.listEmpleados();
-            
+
             ArrayList<Empleado> listaArrayEmpleados = new ArrayList<>(listaEmpleados);
             request.getSession().setAttribute("empleados", listaArrayEmpleados);
-            
+
             RequestDispatcher rd = request.getRequestDispatcher("/listarEmpleados.jsp");
             rd.forward(request, response);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -119,51 +126,51 @@ public class ControllerEmpleados extends HttpServlet {
         String poblacion = request.getParameter("poblacion");
         String codigoPostal = request.getParameter("codigoPostal");
         String provincia = request.getParameter("provincia");
-        
+
         Empleado empleado = new Empleado();
         empleado.setNombre(nombre);
         empleado.setApellidos(apellidos);
         empleado.setDni(dni);
         empleado.setTelefono(telefono);
-        
+
         Direccion d = new Direccion();
         d.setDireccion(direccion);
         d.setPoblacion(poblacion);
         d.setCodigoPostal(codigoPostal);
         d.setProvincia(provincia);
         empleado.setDireccion(d);
-        
+
         try {
             empleadoService.addEmpleado(empleado);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         listarEmpleados(request, response);
     }
 
     private void ModificarEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String accion = request.getParameter("accion");
-        
+
         if (accion != null && accion.equals("editar")) {
             String idEmpleado = request.getParameter("id");
-            
+
             if (idEmpleado != null) {
                 int id = Integer.valueOf(idEmpleado);
                 Empleado empleado = new Empleado();
                 empleado.setId(id);
-                
+
                 try {
                     empleado = this.empleadoService.findEmpleadoById(empleado);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
+
                 request.setAttribute("empleado", empleado);
                 request.getRequestDispatcher("/modificarEmpleado.jsp").forward(request, response);
             }
         } else if (accion != null && accion.equals("modificar")) {
-            
+
             String idEmpleado = request.getParameter("id");
             String nombre = request.getParameter("nombre");
             String apellidos = request.getParameter("apellidos");
@@ -173,7 +180,7 @@ public class ControllerEmpleados extends HttpServlet {
             String poblacion = request.getParameter("poblacion");
             String codigoPostal = request.getParameter("codigoPostal");
             String provincia = request.getParameter("provincia");
-            
+
             Empleado empleado = new Empleado();
             int id = Integer.valueOf(idEmpleado);
             empleado.setId(id);
@@ -181,15 +188,14 @@ public class ControllerEmpleados extends HttpServlet {
             empleado.setApellidos(apellidos);
             empleado.setDni(dni);
             empleado.setTelefono(Integer.valueOf(telefono));
-            
-            
+
             Direccion d = new Direccion();
             d.setDireccion(direccion);
             d.setPoblacion(poblacion);
             d.setCodigoPostal(codigoPostal);
             d.setProvincia(provincia);
             empleado.setDireccion(d);
-            
+
             try {
                 this.empleadoService.updateEmpleado(empleado);
             } catch (Exception e) {
@@ -201,7 +207,7 @@ public class ControllerEmpleados extends HttpServlet {
     }
 
     private void eliminarEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         String idEmpleado = request.getParameter("id");
 
         int id = Integer.parseInt(idEmpleado);
@@ -215,6 +221,24 @@ public class ControllerEmpleados extends HttpServlet {
         }
 
         listarEmpleados(request, response);
+    }
+
+    private void listarEmpleadosPorZona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            String id = request.getParameter("id");
+
+            Zona zona = new Zona();
+            zona.setId(Integer.valueOf(id));
+            zona = zonaService.findZonaById(zona);
+
+            ArrayList<Empleado> listaEmpleados = new ArrayList<>(zona.getEmpleados());
+
+            request.getSession().setAttribute("empleados", listaEmpleados);
+            RequestDispatcher rd = request.getRequestDispatcher("/listarEmpleados.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

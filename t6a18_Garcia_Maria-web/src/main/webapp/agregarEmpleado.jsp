@@ -20,13 +20,13 @@
             <label for="nombre">Nombre:</label>
             <input type="text" name="nombre" style="display: block;"/>
             
-            <label for="nombre">Apellidos:</label>
+            <label for="apellidos">Apellidos:</label>
             <input type="text" name="apellidos" style="display: block;"/>
             
-            <label for="nombre">DNI:</label>
+            <label for="dni">DNI:</label>
             <input type="text" name="dni" style="display: block;"/>
             
-            <label for="nombre">Teléfono:</label>
+            <label for="telefono">Teléfono:</label>
             <input type="text" name="telefono" style="display: block;"/>
             
             <label for="direccion">Direccion:</label>
