@@ -172,6 +172,7 @@ public class ControllerAmarres extends HttpServlet {
             String numero = request.getParameter("numero");
             String tipo = request.getParameter("tipo");
             String dimensiones = request.getParameter("dimensiones");
+            int id_zona = Integer.parseInt(request.getParameter("zona"));
             
             Amarre amarre = new Amarre();
             amarre.setId(Integer.valueOf(id));
@@ -179,8 +180,16 @@ public class ControllerAmarres extends HttpServlet {
             amarre.setTipo(tipo);
             amarre.setDimensiones(dimensiones);
             
+            Zona zona = new Zona();
+        zona.setId(id_zona);
+        zona = zonaService.findZonaById(zona);
+        
+        amarre.setZona(zona);
+        zona.getAmarres().add(amarre);
+            
             try {
                 amarreService.updateAmarre(amarre);
+                zonaService.updateZona(zona);
             } catch (Exception e) {
                 e.printStackTrace();
             }

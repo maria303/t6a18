@@ -19,15 +19,28 @@
         <form action="ModificarAmarre?accion=modificar&id=${amarre.id}" method="post">
             <input type="hidden" name="accion" value="agregar"/>
 
-            <label for="nombre">Numero:</label>
+            <label for="numero">Numero:</label>
             <input type="text" name="numero" value="${amarre.numero}" style="display: block;"/>
 
-            <label for="nombre">Tipo:</label>
+            <label for="tipo">Tipo:</label>
             <input type="text" name="tipo" value="${amarre.tipo}" style="display: block;"/>
 
-            <label for="nombre">Dimensiones:</label>
+            <label for="dimensiones">Dimensiones:</label>
             <input type="text" name="dimensiones" value="${amarre.dimensiones}" style="display: block;"/>
             
+            <label for="zona">Zona:</label>
+            <select name="zona" id="zona" style="display: block;">
+                <%
+                    List<Zona> lista = (List) session.getAttribute("zonas");
+                    for (Zona zona : lista) {
+                        int id = zona.getId();
+                        String letra = zona.getLetra();
+                %>
+                <option value="<%=id%>"><%=letra%></option>
+                <% }%>
+            </select>
+            
+            <input type="submit" value="enviar"/>
             </form>
 
         <a href="index.jsp">Regresar al inicio</a>

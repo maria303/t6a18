@@ -30,7 +30,7 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({
     @NamedQuery(name="Empleado.findAll", query="SELECT e FROM Empleado e ORDER BY e.id")})
-@Table(name="empleado")
+@Table(name="empleados")
 public class Empleado implements Serializable{
     
     private static final long serialVersionUID = 1L;

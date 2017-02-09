@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({
     @NamedQuery(name="Direccion.findAll", query="SELECT d FROM Direccion d ORDER BY d.id")})
-@Table(name="direccion")
+@Table(name="direcciones")
 public class Direccion implements Serializable{
     
     private static final long serialVersionUID = 1L;
