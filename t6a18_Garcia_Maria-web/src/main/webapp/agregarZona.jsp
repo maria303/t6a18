@@ -15,21 +15,23 @@
     </head>
     <body>
         <h1>Agregar Zona</h1>
-        
+
         <form action="AltaZona" method="POST">
             <input type="hidden" name="accion" value="agregar"/>
-            
+
             <label for="letra">Letra:</label>
             <input type="text" name="letra" style="display: block;"/>
-            
+
             <label for="profundidad">Profundidad:</label>
             <input type="text" name="profundidad" style="display: block;"/>
-            
+
             <label for="dimensiones">Dimensiones:</label>
             <input type="text" name="dimensiones" style="display: block;"/>
-            
-            <label for="empleado">Empleado:</label>
-            <select name="empleado" id="empleado" style="display: block;">
+
+            <label for="empleado">Empleados:</label>
+            <br>
+            <div>
+            <select name="empleadosLeft" size = "10" id="empleadosLeft" style="display: block; float: left; width: 150px;">
                 <%
                     List<Empleado> lista = (List) session.getAttribute("empleados");
                     for (Empleado empleado : lista) {
@@ -40,9 +42,18 @@
                 <option value="<%=id%>"><%=nombre%> - <%=apellidos%></option>
                 <% }%>
             </select>
+            <div style="float: left">
+            <input type="button" id="btnRight" value="&gt;&gt;" onclick="add()"/>
+            <br>
+            <input type="button" id="btnLeft" value="&lt;&lt;"/>
+            </div>
+            <select name="empleadosRight" size = "10" id="empleadoRight" style="display: block; width: 150px;">
+            </select>
+            </div>
+            <br>
             <input type="submit" value="enviar"/>
         </form>
-        
+
         <a href="index.jsp">Regresar al inicio</a>
     </body>
 </html>

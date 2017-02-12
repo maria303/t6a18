@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Maria
  */
-@WebServlet(name = "ControllerAmarres", loadOnStartup = 1, 
+@WebServlet(name = "ControllerAmarres", loadOnStartup = 1,
         urlPatterns = {"/ListarAmarres", "/AltaAmarre", "/ModificarAmarre", "/EliminarAmarre", "/ListarAmarresPorZona"})
 public class ControllerAmarres extends HttpServlet {
 
@@ -47,18 +47,18 @@ public class ControllerAmarres extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String userPath = request.getServletPath();
-        
-        if(userPath.equals("/ListarAmarres")){
+
+        if (userPath.equals("/ListarAmarres")) {
             listarAmarres(request, response);
-        }else if(userPath.equals("/AltaAmarre")){
+        } else if (userPath.equals("/AltaAmarre")) {
             altaAmarre(request, response);
-        }else if(userPath.equals("/ModificarAmarre")){
+        } else if (userPath.equals("/ModificarAmarre")) {
             modificarAmarre(request, response);
-        }else if(userPath.equals("/EliminarAmarre")){
+        } else if (userPath.equals("/EliminarAmarre")) {
             eliminarAmarre(request, response);
-        }else if(userPath.equals("/ListarAmarresPorZona")){
+        } else if (userPath.equals("/ListarAmarresPorZona")) {
             listarAmarresPorZona(request, response);
         }
     }
@@ -103,20 +103,20 @@ public class ControllerAmarres extends HttpServlet {
     }// </editor-fold>
 
     private void listarAmarres(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try{
+        try {
             List listaAmarres = amarreService.listAmarres();
-            
+
             ArrayList<Amarre> listaArrayAmarres = new ArrayList<>(listaAmarres);
             request.getSession().setAttribute("amarres", listaArrayAmarres);
-            
+
             List listaZonas = zonaService.listZonas();
-            
+
             ArrayList<Zona> listaArrayZonas = new ArrayList<>(listaZonas);
             request.getSession().setAttribute("zonas", listaArrayZonas);
-            
+
             RequestDispatcher rd = request.getRequestDispatcher("/listarAmarres.jsp");
             rd.forward(request, response);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -126,67 +126,67 @@ public class ControllerAmarres extends HttpServlet {
         String tipo = request.getParameter("tipo");
         String dimensiones = request.getParameter("dimensiones");
         int id_zona = Integer.parseInt(request.getParameter("zona"));
-        
+
         Amarre amarre = new Amarre(numero, tipo, dimensiones);
-        
+
         Zona zona = new Zona();
         zona.setId(id_zona);
         zona = zonaService.findZonaById(zona);
-        
+
         amarre.setZona(zona);
         zona.getAmarres().add(amarre);
-        
-        try{
+
+        try {
             amarreService.addAmarre(amarre);
             zonaService.updateZona(zona);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         listarAmarres(request, response);
     }
 
     private void modificarAmarre(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String accion = request.getParameter("accion");
-        
+
         if (accion != null && accion.equals("editar")) {
             String idAmarre = request.getParameter("id");
-            
+
             if (idAmarre != null) {
                 int id = Integer.valueOf(idAmarre);
                 Amarre amarre = new Amarre();
                 amarre.setId(id);
-                
+
                 try {
                     amarre = amarreService.findAmarreById(amarre);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
+
                 request.setAttribute("amarre", amarre);
                 request.getRequestDispatcher("/modificarAmarre.jsp").forward(request, response);
             }
         } else if (accion != null && accion.equals("modificar")) {
-            
+
             String id = request.getParameter("id");
             String numero = request.getParameter("numero");
             String tipo = request.getParameter("tipo");
             String dimensiones = request.getParameter("dimensiones");
             int id_zona = Integer.parseInt(request.getParameter("zona"));
-            
+
             Amarre amarre = new Amarre();
             amarre.setId(Integer.valueOf(id));
             amarre.setNumero(Integer.valueOf(numero));
             amarre.setTipo(tipo);
             amarre.setDimensiones(dimensiones);
-            
+
             Zona zona = new Zona();
-        zona.setId(id_zona);
-        zona = zonaService.findZonaById(zona);
-        
-        amarre.setZona(zona);
-        zona.getAmarres().add(amarre);
-            
+            zona.setId(id_zona);
+            zona = zonaService.findZonaById(zona);
+
+            amarre.setZona(zona);
+            zona.getAmarres().add(amarre);
+
             try {
                 amarreService.updateAmarre(amarre);
                 zonaService.updateZona(zona);
@@ -214,19 +214,19 @@ public class ControllerAmarres extends HttpServlet {
     }
 
     private void listarAmarresPorZona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try{
+        try {
             String id = request.getParameter("id");
-            
+
             Zona zona = new Zona();
             zona.setId(Integer.valueOf(id));
             zona = zonaService.findZonaById(zona);
-            
+
             ArrayList<Amarre> listaArrayAmarres = new ArrayList<>(zona.getAmarres());
             request.getSession().setAttribute("amarres", listaArrayAmarres);
-            
+
             RequestDispatcher rd = request.getRequestDispatcher("/listarAmarres.jsp");
             rd.forward(request, response);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
