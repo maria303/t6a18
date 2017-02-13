@@ -35,7 +35,7 @@ public class ZonaService implements ZonaServiceLocal {
     }
 
     @Override
-    public Zona findZonaById(Zona zona) {
+    public Zona findZonaById(Zona zona) {        
         return zonaDAO.findZonaById(zona);
     }
 

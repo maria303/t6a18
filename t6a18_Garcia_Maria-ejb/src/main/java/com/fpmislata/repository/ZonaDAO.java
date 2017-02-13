@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ZonaDAO implements ZonaDAOLocal {
 
-    @PersistenceContext(unitName = "ZonaPU")
+    @PersistenceContext(unitName = "ProyectoPU")
     EntityManager em;
     
     // Add business logic below. (Right-click in editor and choose
@@ -36,7 +36,8 @@ public class ZonaDAO implements ZonaDAOLocal {
 
     @Override
     public Zona findZonaById(Zona zona) {
-        return em.find(Zona.class, zona.getId());
+        Zona z = em.find(Zona.class, zona.getId());
+        return z;
     }
 
     @Override

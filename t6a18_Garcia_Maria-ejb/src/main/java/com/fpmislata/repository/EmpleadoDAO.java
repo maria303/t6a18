@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class EmpleadoDAO implements EmpleadoDAOLocal {
     
-    @PersistenceContext(unitName = "EmpleadoPU")
+    @PersistenceContext(unitName = "ProyectoPU")
     EntityManager em;
 
     // Add business logic below. (Right-click in editor and choose

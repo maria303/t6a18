@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class AmarreDAO implements AmarreDAOLocal {
 
-    @PersistenceContext(unitName = "AmarrePU")
+    @PersistenceContext(unitName = "ProyectoPU")
     EntityManager em;
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
