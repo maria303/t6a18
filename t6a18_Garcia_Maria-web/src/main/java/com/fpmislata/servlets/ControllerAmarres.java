@@ -178,7 +178,6 @@ public class ControllerAmarres extends HttpServlet {
             amarre.setId(Integer.valueOf(id));
             
             amarre = amarreService.findAmarreById(amarre);
-            amarre.getZona().getAmarres().remove(amarre);
             
             amarre.setNumero(Integer.valueOf(numero));
             amarre.setTipo(tipo);
@@ -187,13 +186,15 @@ public class ControllerAmarres extends HttpServlet {
             Zona zona = new Zona();
             zona.setId(id_zona);
             zona = zonaService.findZonaById(zona);
-            
+            Zona zonaAntigua = amarre.getZona();
+            boolean borrado = amarre.getZona().getAmarres().remove(amarre);
             amarre.setZona(zona);
             zona.getAmarres().add(amarre);
            
             try {
                 amarreService.updateAmarre(amarre);
                 zonaService.updateZona(zona);
+                zonaService.updateZona(zonaAntigua);
             } catch (Exception e) {
                 e.printStackTrace();
             }

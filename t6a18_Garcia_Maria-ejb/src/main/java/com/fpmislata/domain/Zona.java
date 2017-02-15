@@ -53,7 +53,7 @@ public class Zona implements Serializable{
     @OneToMany(mappedBy = "zona", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private Set<Amarre> amarres;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "zonas_empleados", joinColumns = @JoinColumn(name = "id_zona"), inverseJoinColumns = @JoinColumn(name = "id_empleado"))
     private Set<Empleado> empleados;
 
