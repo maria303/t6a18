@@ -43,7 +43,7 @@
                 <% }%>
             </select>
             <div style="float: left">
-            <input type="button" id="btnRight" value="&gt;&gt;" onclick="add()"/>
+            <input type="button" id="btnRight" value="&gt;&gt;"/>
             <br>
             <input type="button" id="btnLeft" value="&lt;&lt;"/>
             </div>

@@ -52,7 +52,7 @@ public class Empleado implements Serializable{
     @Column(nullable = false, length =9)
     private int telefono;
     
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn(name = "direccion")
     private Direccion direccion;
 
