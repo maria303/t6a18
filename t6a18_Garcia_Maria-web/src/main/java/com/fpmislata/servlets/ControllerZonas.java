@@ -126,6 +126,10 @@ public class ControllerZonas extends HttpServlet {
         String dimensiones = request.getParameter("dimensiones");
         int id_empleado = Integer.parseInt(request.getParameter("empleado"));
         
+        
+        
+        
+        
         Zona zona = new Zona(letra, profundidad, dimensiones);
         
         Empleado empleado = new Empleado();
@@ -146,7 +150,46 @@ public class ControllerZonas extends HttpServlet {
     }
 
     private void modificarZona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String accion = request.getParameter("accion");
         
+        if (accion != null && accion.equals("editar")) {
+            String idZona = request.getParameter("id");
+            
+            if (idZona != null) {
+                int id = Integer.valueOf(idZona);
+                Zona zona = new Zona();
+                zona.setId(id);
+                
+                try {
+                    zona = zonaService.findZonaById(zona);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
+                request.setAttribute("zona", zona);
+                request.getRequestDispatcher("/modificarZona.jsp").forward(request, response);
+            }
+        } else if (accion != null && accion.equals("modificar")) {
+            
+            String idZona = request.getParameter("id");
+            String letra = request.getParameter("letra");
+            String profundidad = request.getParameter("profundidad");
+            String dimensiones = request.getParameter("dimensiones");
+            
+            Zona zona = new Zona();
+            zona.setId(Integer.parseInt(idZona));
+            zona.setLetra(letra);
+            zona.setProfundidad(Integer.parseInt(profundidad));
+            zona.setDimensiones(dimensiones);
+            
+            try {
+                zonaService.updateZona(zona);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
+            listarZonas(request, response);
+        }
     }
 
     private void eliminarZona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -14,7 +14,7 @@
         <title>Listado Empleados</title>
     </head>
     <body>
-        <h1>Listado de Empledaos</h1>
+        <h1>Listado de Empleados</h1>
         
         <a href="agregarEmpleado.jsp">Agregar Empleado</a>
         <br/>

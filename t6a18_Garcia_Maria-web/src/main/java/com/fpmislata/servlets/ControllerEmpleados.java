@@ -111,6 +111,10 @@ public class ControllerEmpleados extends HttpServlet {
             ArrayList<Empleado> listaArrayEmpleados = new ArrayList<>(listaEmpleados);
             request.getSession().setAttribute("empleados", listaArrayEmpleados);
             
+            List listaZonas = zonaService.listZonas();
+            ArrayList<Zona> listaArrayZonas = new ArrayList<>(listaZonas);
+            request.getSession().setAttribute("zonas", listaArrayZonas);
+            
             RequestDispatcher rd = request.getRequestDispatcher("/listarEmpleados.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
@@ -141,8 +145,6 @@ public class ControllerEmpleados extends HttpServlet {
         d.setProvincia(provincia);
         empleado.setDireccion(d);
         
-//        Zona zona = new Zona();
-//        
         
         try {
             empleadoService.addEmpleado(empleado);

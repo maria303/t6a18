@@ -1,6 +1,6 @@
 <%-- 
-    Document   : agregarZona
-    Created on : 06-feb-2017, 9:37:50
+    Document   : modificarZona
+    Created on : 16-feb-2017, 9:47:38
     Author     : alumno
 --%>
 
@@ -32,19 +32,19 @@
             }
         </script>
         
-        <h1>Agregar Zona</h1>
+        <h1>Modificar Zona</h1>
 
-        <form action="AltaZona" method="POST">
+        <form action="ModificarZona?accion=modificar&id=${zona.id}" method="post">
             <input type="hidden" name="accion" value="agregar"/>
 
             <label for="letra">Letra:</label>
-            <input type="text" name="letra" style="display: block;"/>
+            <input type="text" name="letra" value="${zona.letra}" style="display: block;"/>
 
             <label for="profundidad">Profundidad:</label>
-            <input type="text" name="profundidad" style="display: block;"/>
+            <input type="text" name="profundidad" value="${zona.profundidad}" style="display: block;"/>
 
             <label for="dimensiones">Dimensiones:</label>
-            <input type="text" name="dimensiones" style="display: block;"/>
+            <input type="text" name="dimensiones" value="${zona.dimensiones}" style="display: block;"/>
 
             <label for="empleado">Empleados:</label>
             <br>
