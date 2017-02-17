@@ -49,15 +49,14 @@
             <label for="empleado">Empleados:</label>
             <br>
             <%
-                    List<Empleado> lista = (List) session.getAttribute("empleados");
-                    for (Empleado empleado : lista) {
-                        int id = empleado.getId();
-                        String nombre = empleado.getNombre();
-                %>
-                <!--<option value="<//%=id%>"><//%=letra%></option>-->
-                <input type="checkbox" name="empleadosAdd" value="<%=id%>"><%=nombre%>
-                <% }%>
-                <br>
+                List<Empleado> lista = (List) session.getAttribute("empleados");
+                for (Empleado empleado : lista) {
+                    int id = empleado.getId();
+                    String nombre = empleado.getNombre();
+            %>
+            <input type="checkbox" name="empleadosAdd" value="<%=id%>"><%=nombre%>
+            <% }%>
+            <br>
             <input type="submit" value="enviar"/>
         </form>
 
