@@ -59,6 +59,7 @@ public class Zona implements Serializable{
 
     public Zona() {
         amarres = new HashSet<>();
+        empleados = new HashSet<>();
     }
 
     public Zona(String letra, int profundidad, String dimensiones) {
@@ -66,6 +67,7 @@ public class Zona implements Serializable{
         this.profundidad = profundidad;
         this.dimensiones = dimensiones;
         amarres = new HashSet<>();
+        empleados = new HashSet<>();
     }
 
     public int getId() {

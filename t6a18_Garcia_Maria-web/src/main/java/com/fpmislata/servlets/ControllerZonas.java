@@ -124,27 +124,49 @@ public class ControllerZonas extends HttpServlet {
         String letra = request.getParameter("letra");
         int profundidad = Integer.parseInt(request.getParameter("profundidad"));
         String dimensiones = request.getParameter("dimensiones");
-        int id_empleado = Integer.parseInt(request.getParameter("empleado"));
+//        int id_empleado = Integer.parseInt(request.getParameter("empleado"));
         
+        String[] empleados = request.getParameterValues("empleadosAdd");
         
+        Zona zona = new Zona();
+        zona.setLetra(letra);
+        zona.setProfundidad(profundidad);
+        zona.setDimensiones(dimensiones);
         
-        
-        
-        Zona zona = new Zona(letra, profundidad, dimensiones);
-        
-        Empleado empleado = new Empleado();
-        empleado.setId(id_empleado);
-        empleado = empleadoService.findEmpleadoById(empleado);
-        
-        zona.setEmpleados((Set<Empleado>) empleado);
-        empleado.getZonas().add(zona);
-        
-        try{
+        try {
             zonaService.addZona(zona);
-            empleadoService.updateEmpleado(empleado);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        Empleado empleado;
+        for (String e : empleados) {
+            empleado = new Empleado();
+            int idEmpleado = Integer.parseInt(e);
+            empleado.setId(idEmpleado);
+            empleado = empleadoService.findEmpleadoById(empleado);
+            empleado.getZonas().add(zona);
+            zona.getEmpleados().add(empleado);
+            try {
+                empleadoService.updateEmpleado(empleado);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        
+//        Empleado empleado = new Empleado();
+//        empleado.setId(id_empleado);
+//        empleado = empleadoService.findEmpleadoById(empleado);
+//        
+//        zona.setEmpleados((Set<Empleado>) empleado);
+//        empleado.getZonas().add(zona);
+//        
+//        try{
+//            zonaService.addZona(zona);
+//            empleadoService.updateEmpleado(empleado);
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
         
         listarZonas(request, response);
     }

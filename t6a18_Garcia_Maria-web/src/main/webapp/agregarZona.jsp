@@ -48,28 +48,16 @@
 
             <label for="empleado">Empleados:</label>
             <br>
-            <div>
-            <select name="empleadosRemove" size = "10" id="empleadosRemove" style="display: block; float: left; width: 150px;">
-                <%
+            <%
                     List<Empleado> lista = (List) session.getAttribute("empleados");
                     for (Empleado empleado : lista) {
                         int id = empleado.getId();
                         String nombre = empleado.getNombre();
-                        String apellidos = empleado.getApellidos();
                 %>
-                <option value="<%=id%>"><%=nombre%> - <%=apellidos%></option>
+                <!--<option value="<//%=id%>"><//%=letra%></option>-->
+                <input type="checkbox" name="empleadosAdd" value="<%=id%>"><%=nombre%>
                 <% }%>
-            </select>
-            <div style="float: left">
-                <input type="button" id="btnAdd" value="&gt;&gt;" onclick="add()"/>
-            <br>
-            <input type="button" id="btnRemove" value="&lt;&lt;" onclick="remove()"/>
-            </div>
-            <select name="empleadosAdd" size = "10" id="empleadosAdd" style="display: block; width: 150px;">
-            </select>
-            </div>
-            <br>
-            
+                <br>
             <input type="submit" value="enviar"/>
         </form>
 
