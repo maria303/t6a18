@@ -64,23 +64,24 @@
             <label for="zona">Zonas:</label>
             <br>
             <div>
-            <select name="zonasRemove" size = "10" id="zonasRemove" style="display: block; float: left; width: 150px;">
-                <%
+            <!--<select multiple name="zonasRemove" size = "10" id="zonasRemove" style="display: block; float: left; width: 150px;">
+               --> <%
                     List<Zona> lista = (List) session.getAttribute("zonas");
                     for (Zona zona : lista) {
                         int id = zona.getId();
                         String letra = zona.getLetra();
                 %>
-                <option value="<%=id%>"><%=letra%></option>
+                <!--<option value="<//%=id%>"><//%=letra%></option>-->
+                <input type="checkbox" name="zonasAdd" value="<%=id%>"><%=letra%>
                 <% }%>
-            </select>
+            <!--</select>
             <div style="float: left">
                 <input type="button" id="btnAdd" value="&gt;&gt;" onclick="add()"/>
             <br>
             <input type="button" id="btnRemove" value="&lt;&lt;" onclick="remove()"/>
             </div>
             <select name="zonasAdd" size = "10" id="zonasAdd" style="display: block; width: 150px;">
-            </select>
+            </select>-->
             </div>
             <br>
             

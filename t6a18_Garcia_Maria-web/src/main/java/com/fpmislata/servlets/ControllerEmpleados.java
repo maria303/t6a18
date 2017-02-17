@@ -123,6 +123,10 @@ public class ControllerEmpleados extends HttpServlet {
     }
     
     private void altaEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String[] zonas = request.getParameterValues("zonasAdd");
+        for(String z : zonas){
+            
+        }
         String nombre = request.getParameter("nombre");
         String apellidos = request.getParameter("apellidos");
         String dni = request.getParameter("dni");
