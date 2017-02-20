@@ -44,7 +44,7 @@
                 <td><%=letra%></td>
                 <td><%=profundidad%></td>
                 <td><%=dimensiones%></td>
-                <td><a href="ModificarZona?accion=editar&id=<%=id%>">Modificar zona</a></td>
+                <td><a href="#">Modificar zona</a></td>
                 <td><a href="EliminarZona?id=<%=id%>">Eliminar zona</a></td>
                 <td><a href="ListarAmarresPorZona?id=<%=id%>">Visualizar amarres</a></td>
                 <td><a href="ListarEmpleadosPorZona?id=<%=id%>">Visualizar empleados</a></td>

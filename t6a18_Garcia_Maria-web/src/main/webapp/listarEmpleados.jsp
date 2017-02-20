@@ -55,8 +55,8 @@
                 <td><%=poblacion%></td>
                 <td><%=codigoPostal%></td>
                 <td><%=provincia%></td>
-                <td><a href="ModificarEmpleado?accion=editar&id=<%=id%>">Modificar</a></td>
-                <td><a href="EliminarEmpleado?id=<%=id%>">Eliminar</a></td>
+                <td><a href="#">Modificar empleado</a></td>
+                <td><a href="EliminarEmpleado?id=<%=id%>">Eliminar empleado</a></td>
                 <td><a href="ListarZonasPorEmpleado?id=<%=id%>">Visualizar Zonas</a></td>
             </tr>
             <% }%>

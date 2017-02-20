@@ -175,108 +175,7 @@ public class ControllerEmpleados extends HttpServlet {
     }
 
     private void ModificarEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String accion = request.getParameter("accion");
-
-        if (accion != null && accion.equals("editar")) {
-            String idEmpleado = request.getParameter("id");
-
-            if (idEmpleado != null) {
-                int id = Integer.valueOf(idEmpleado);
-                Empleado empleado = new Empleado();
-                empleado.setId(id);
-
-                try {
-                    empleado = this.empleadoService.findEmpleadoById(empleado);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                request.setAttribute("empleado", empleado);
-                request.getRequestDispatcher("/modificarEmpleado.jsp").forward(request, response);
-            }
-        } else if (accion != null && accion.equals("modificar")) {
-
-            String idEmpleado = request.getParameter("id");
-            String nombre = request.getParameter("nombre");
-            String apellidos = request.getParameter("apellidos");
-            String dni = request.getParameter("dni");
-            String telefono = request.getParameter("telefono");
-            String direccion = request.getParameter("direccion");
-            String poblacion = request.getParameter("poblacion");
-            String codigoPostal = request.getParameter("codigoPostal");
-            String provincia = request.getParameter("provincia");
-            String[] zonas = request.getParameterValues("zonasAdd");
-
-            Empleado empleado = new Empleado();
-            int id = Integer.valueOf(idEmpleado);
-            empleado.setId(id);
-            empleado.setNombre(nombre);
-            empleado.setApellidos(apellidos);
-            empleado.setDni(dni);
-            empleado.setTelefono(Integer.valueOf(telefono));
-
-            Direccion d = new Direccion();
-            d.setDireccion(direccion);
-            d.setPoblacion(poblacion);
-            d.setCodigoPostal(codigoPostal);
-            d.setProvincia(provincia);
-            empleado.setDireccion(d);
-
-            try {
-                empleadoService.updateEmpleado(empleado);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //////
-            if (zonas != null) {
-                
-                
-                
-//                Set<Zona> zonasAntiguas = empleado.getZonas();
-//                for(Zona z2 : zonasAntiguas){
-//                    z2.getEmpleados().remove(empleado);
-//                    empleado.getZonas().remove(z2);
-//                    zonaService.updateZona(z2);
-//                }
-                
-                
-                
-                
-                Zona zona;
-                for (String z : zonas) {
-                    zona = new Zona();
-                    int idZona = Integer.parseInt(z);
-                    zona.setId(idZona);
-                    zona = zonaService.findZonaById(zona);
-                    zona.getEmpleados().add(empleado);
-                    empleado.getZonas().add(zona);
-                    try {
-                        zonaService.updateZona(zona);
-                        ////ACTUALITZAR EMPLEADO????
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-//            }else{
-////                Zona zona;
-////                for(String z: zonas){
-////                    zona = new Zona();
-////                    int idZona = Integer.parseInt(z);
-////                    zona.setId(idZona);
-////                    zona = zonaService.findZonaById(zona);
-////                    
-////                }
-//                Set<Zona> zonasRemove = empleado.getZonas();
-//                for(Zona zona : zonasRemove){
-//                    zona.getEmpleados().remove(empleado);
-//                    empleado.getZonas().remove(zona);
-//                    zonaService.updateZona(zona);
-//                }
-//                empleadoService.updateEmpleado(empleado);
-            }
-            /////
-            listarEmpleados(request, response);
-        }
+        
     }
 
     private void eliminarEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -306,14 +205,6 @@ public class ControllerEmpleados extends HttpServlet {
         }
 
         listarEmpleados(request, response);
-
-//        List listaEmpleados = empleadoService.listEmpleados();
-//
-//        ArrayList<Empleado> listaArrayEmpleados = new ArrayList<>(listaEmpleados);
-//        request.getSession().setAttribute("empleados", listaArrayEmpleados);
-//
-//        RequestDispatcher rd = request.getRequestDispatcher("/listarEmpleados.jsp");
-//        rd.forward(request, response);
     }
 
     private void listarEmpleadosPorZona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
