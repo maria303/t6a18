@@ -154,18 +154,20 @@ public class ControllerEmpleados extends HttpServlet {
             e.printStackTrace();
         }
 
-        Zona zona;
-        for (String z : zonas) {
-            zona = new Zona();
-            int idZona = Integer.parseInt(z);
-            zona.setId(idZona);
-            zona = zonaService.findZonaById(zona);
-            zona.getEmpleados().add(empleado);
-            empleado.getZonas().add(zona);
-            try {
-                zonaService.updateZona(zona);
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (zonas != null) {
+            Zona zona;
+            for (String z : zonas) {
+                zona = new Zona();
+                int idZona = Integer.parseInt(z);
+                zona.setId(idZona);
+                zona = zonaService.findZonaById(zona);
+                zona.getEmpleados().add(empleado);
+                empleado.getZonas().add(zona);
+                try {
+                    zonaService.updateZona(zona);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -203,6 +205,7 @@ public class ControllerEmpleados extends HttpServlet {
             String poblacion = request.getParameter("poblacion");
             String codigoPostal = request.getParameter("codigoPostal");
             String provincia = request.getParameter("provincia");
+            String[] zonas = request.getParameterValues("zonasAdd");
 
             Empleado empleado = new Empleado();
             int id = Integer.valueOf(idEmpleado);
@@ -224,7 +227,54 @@ public class ControllerEmpleados extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
+            //////
+            if (zonas != null) {
+                
+                
+                
+//                Set<Zona> zonasAntiguas = empleado.getZonas();
+//                for(Zona z2 : zonasAntiguas){
+//                    z2.getEmpleados().remove(empleado);
+//                    empleado.getZonas().remove(z2);
+//                    zonaService.updateZona(z2);
+//                }
+                
+                
+                
+                
+                Zona zona;
+                for (String z : zonas) {
+                    zona = new Zona();
+                    int idZona = Integer.parseInt(z);
+                    zona.setId(idZona);
+                    zona = zonaService.findZonaById(zona);
+                    zona.getEmpleados().add(empleado);
+                    empleado.getZonas().add(zona);
+                    try {
+                        zonaService.updateZona(zona);
+                        ////ACTUALITZAR EMPLEADO????
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+//            }else{
+////                Zona zona;
+////                for(String z: zonas){
+////                    zona = new Zona();
+////                    int idZona = Integer.parseInt(z);
+////                    zona.setId(idZona);
+////                    zona = zonaService.findZonaById(zona);
+////                    
+////                }
+//                Set<Zona> zonasRemove = empleado.getZonas();
+//                for(Zona zona : zonasRemove){
+//                    zona.getEmpleados().remove(empleado);
+//                    empleado.getZonas().remove(zona);
+//                    zonaService.updateZona(zona);
+//                }
+//                empleadoService.updateEmpleado(empleado);
+            }
+            /////
             listarEmpleados(request, response);
         }
     }
@@ -236,6 +286,7 @@ public class ControllerEmpleados extends HttpServlet {
         int id = Integer.valueOf(idEmpleado);
         Empleado empleado = new Empleado();
         empleado.setId(id);
+        empleado = empleadoService.findEmpleadoById(empleado);
 
         Set<Zona> lista = empleado.getZonas();
         ArrayList<Zona> zonas = new ArrayList<>(lista);
@@ -254,13 +305,15 @@ public class ControllerEmpleados extends HttpServlet {
             e.printStackTrace();
         }
 
-        List listaEmpleados = empleadoService.listEmpleados();
+        listarEmpleados(request, response);
 
-        ArrayList<Empleado> listaArrayEmpleados = new ArrayList<>(listaEmpleados);
-        request.getSession().setAttribute("empleados", listaArrayEmpleados);
-
-        RequestDispatcher rd = request.getRequestDispatcher("/listarEmpleados.jsp");
-        rd.forward(request, response);
+//        List listaEmpleados = empleadoService.listEmpleados();
+//
+//        ArrayList<Empleado> listaArrayEmpleados = new ArrayList<>(listaEmpleados);
+//        request.getSession().setAttribute("empleados", listaArrayEmpleados);
+//
+//        RequestDispatcher rd = request.getRequestDispatcher("/listarEmpleados.jsp");
+//        rd.forward(request, response);
     }
 
     private void listarEmpleadosPorZona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -44,14 +44,6 @@
                 <td><%=letra%></td>
                 <td><%=profundidad%></td>
                 <td><%=dimensiones%></td>
-                <!--<td>-->
-                <% /*Set<Empleado> empleados = zona.getEmpleados();
-                    for(Empleado empleado : empleados){
-                        String empleado2 = empleado.getNombre();*/
-                %>
-                <%/*=empleado2 + " "*/%>
-                <%/* }*/ %>
-                <!--</td>-->
                 <td><a href="ModificarZona?accion=editar&id=<%=id%>">Modificar zona</a></td>
                 <td><a href="EliminarZona?id=<%=id%>">Eliminar zona</a></td>
                 <td><a href="ListarAmarresPorZona?id=<%=id%>">Visualizar amarres</a></td>

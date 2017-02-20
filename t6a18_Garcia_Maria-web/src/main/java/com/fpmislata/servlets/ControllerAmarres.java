@@ -212,7 +212,6 @@ public class ControllerAmarres extends HttpServlet {
         
         Zona zona = amarre.getZona();
         amarre.getZona().getAmarres().remove(amarre);
-//        zona.getAmarres().remove(amarre);
         
         try {
             amarreService.deleteAmarre(amarre);

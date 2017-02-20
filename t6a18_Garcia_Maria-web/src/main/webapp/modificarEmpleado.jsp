@@ -44,25 +44,14 @@
             
             <label for="zona">Zonas:</label>
             <br>
-            <div>
-            <select name="zonasRemove" size = "10" id="zonasRemove" style="display: block; float: left; width: 150px;">
-                <%
-                    List<Zona> lista = (List) session.getAttribute("zonas");
+            <%
+                List<Zona> lista = (List) session.getAttribute("zonas");
                     for (Zona zona : lista) {
                         int id = zona.getId();
                         String letra = zona.getLetra();
-                %>
-                <option value="<%=id%>"><%=letra%></option>
-                <% }%>
-            </select>
-            <div style="float: left">
-                <input type="button" id="btnAdd" value="&gt;&gt;" onclick="add()"/>
-            <br>
-            <input type="button" id="btnRemove" value="&lt;&lt;" onclick="remove()"/>
-            </div>
-            <select name="zonasAdd" size = "10" id="zonasAdd" style="display: block; width: 150px;">
-            </select>
-            </div>
+            %>
+            <input type="checkbox" name="zonasAdd" value="<%=id%>"><%=letra%>
+            <% }%>
             <br>
             
             <input type="submit" name="guardar" value="guardar">

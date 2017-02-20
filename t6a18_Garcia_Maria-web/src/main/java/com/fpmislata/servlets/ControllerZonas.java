@@ -138,18 +138,20 @@ public class ControllerZonas extends HttpServlet {
             e.printStackTrace();
         }
 
-        Empleado empleado;
-        for (String e : empleados) {
-            empleado = new Empleado();
-            int idEmpleado = Integer.parseInt(e);
-            empleado.setId(idEmpleado);
-            empleado = empleadoService.findEmpleadoById(empleado);
-            empleado.getZonas().add(zona);
-            zona.getEmpleados().add(empleado);
-            try {
-                empleadoService.updateEmpleado(empleado);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+        if (empleados != null) {
+            Empleado empleado;
+            for (String e : empleados) {
+                empleado = new Empleado();
+                int idEmpleado = Integer.parseInt(e);
+                empleado.setId(idEmpleado);
+                empleado = empleadoService.findEmpleadoById(empleado);
+                empleado.getZonas().add(zona);
+                zona.getEmpleados().add(empleado);
+                try {
+                    empleadoService.updateEmpleado(empleado);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }
 
@@ -172,10 +174,10 @@ public class ControllerZonas extends HttpServlet {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
+
                 List listaEmpleados = empleadoService.listEmpleados();
                 ArrayList<Empleado> listaArrayEmpleados = new ArrayList<>(listaEmpleados);
-                
+
                 request.setAttribute("empleados", listaArrayEmpleados);
                 request.setAttribute("zona", zona);
                 request.getRequestDispatcher("/modificarZona.jsp").forward(request, response);
@@ -208,6 +210,18 @@ public class ControllerZonas extends HttpServlet {
 
         Zona zona = new Zona();
         zona.setId(Integer.valueOf(id));
+        zona = zonaService.findZonaById(zona);
+
+        Set<Empleado> lista = zona.getEmpleados();
+        ArrayList<Empleado> empleados = new ArrayList<>(lista);
+        for (Empleado empleado : empleados) {
+            empleado.getZonas().remove(zona);
+            try {
+                empleadoService.updateEmpleado(empleado);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         try {
             zonaService.deleteZona(zona);
